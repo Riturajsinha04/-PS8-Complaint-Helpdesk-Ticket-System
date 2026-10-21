@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { API_BASE_URL } from '../api/config';
 
 export default function TicketForm({ isEdit = false }) {
     const [formData, setFormData] = useState({ title: '', category: '', priority: 'medium', description: '', screenshotUrl: ''});
@@ -10,12 +11,12 @@ export default function TicketForm({ isEdit = false }) {
     useEffect(() => {
         if(isEdit && id) {
             const token = localStorage.getItem('token');
-            fetch(`http://localhost:5000/api/tickets/${id}`, {
+            fetch(`${API_BASE_URL}/tickets/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             .then(res => res.json())
             .then(data => {
-                if(data.tickets) {
+                if(data.ticket) {
                     setFormData({
                         title: data.ticket.title,
                         category: data.ticket.category,
@@ -33,7 +34,7 @@ export default function TicketForm({ isEdit = false }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token =localStorage.getItem('token');
-        const url = isEdit ? `http://localhost:5000/api/tickets/${id}` : 'http://localhost:5000/api/tickets';
+        const url = isEdit ? `${API_BASE_URL}/tickets/${id}` : `${API_BASE_URL}/tickets`;
         const method = isEdit ? 'PUT' : 'POST';
 
         try{

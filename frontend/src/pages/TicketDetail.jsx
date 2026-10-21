@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../api/config';
 
 export default function TicketDetail({ user }) {
     const { id } = useParams();
@@ -10,7 +11,7 @@ export default function TicketDetail({ user }) {
 
     const loadTicket = () => {
         const token = localStorage.getItem('token');
-        fetch(`http://localhost:5000/api/tickets/${id}`, {
+        fetch(`${API_BASE_URL}/tickets/${id}`, {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then(res => res.json())
@@ -25,7 +26,7 @@ export default function TicketDetail({ user }) {
     const handleStatusChange = async (newStatus) => {
         const token = localStorage.getItem('token');
         try {
-            const res = await fetch(`http://localhost:5000/api/tickets/${id}`, {
+            const res = await fetch(`${API_BASE_URL}/tickets/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,7 +46,7 @@ export default function TicketDetail({ user }) {
         e.preventDefault();
         const token = localStorage.getItem('token');
         try {
-            const res = await fetch(`http://localhost:5000/api/tickets/${id}/comments`, {
+            const res = await fetch(`${API_BASE_URL}/tickets/${id}/comments`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                 body: JSON.stringify({ message: commentText })

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../api/config';
 
 export default function AdminDashboard() {
     const [tickets, setTickets] = useState([]);
@@ -7,7 +8,7 @@ export default function AdminDashboard() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        fetch('http://localhost:5000/api/tickets', {
+        fetch(`${API_BASE_URL}/tickets`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         .then(async res => {

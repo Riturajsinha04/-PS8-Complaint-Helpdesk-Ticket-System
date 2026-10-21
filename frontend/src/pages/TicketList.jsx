@@ -1,5 +1,6 @@
 import react, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { API_BASE_URL } from '../api/config';
 
 export default function TicketList({ user }) {
     const [ticket, setTickets] = useState([]);
@@ -7,7 +8,7 @@ export default function TicketList({ user }) {
 
     useEffect(() =>{
         const token = localStorage.getItem('token');
-        fetch('http://localhost:5000/api/tickets', {
+        fetch(`${API_BASE_URL}/tickets`, {
             headers: { Authorization: `Bearer ${token}` }
         })
         .then(async res => {
